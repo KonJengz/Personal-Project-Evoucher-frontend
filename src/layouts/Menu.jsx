@@ -14,7 +14,7 @@ export default function Menu() {
     ]
 
   return (
-    <nav className="flex justify-center gap-4 py-1.5">
+    <nav className="flex justify-center gap-5 py-1.5">
         {menuList.map((el) => (
             <MenuItem key={el.id} text={el.text} to={el.to} active={pathname === el.to} />
         ))}

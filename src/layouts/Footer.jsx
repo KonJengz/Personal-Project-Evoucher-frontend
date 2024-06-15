@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logofastervoucher from '../assets/logo/logo-footer.svg'
 import qrCode from '../assets/qrcode.svg'
 
@@ -20,8 +21,10 @@ export default function Footer() {
             </div>
         </div>
 
-        <div className="border-t border-gray-300 border-opacity-50 text-center pb-3 pt-1">
+        <div className="border-t border-gray-300 border-opacity-50 text-center pb-3 pt-1 flex justify-between items-center">
+            <small className="text-[#C6CBD4] text-xs invisible">login</small>
             <small className="text-[#C6CBD4] text-xs">&#169; KonJeng Create 2024</small>
+            <Link to='/login'><small className="text-[#5a6373] text-xs">login</small></Link>
         </div>
     </footer>
   )

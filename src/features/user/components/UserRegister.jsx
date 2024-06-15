@@ -1,6 +1,11 @@
 import { useState } from "react";
-import Input from "./Input";
-import Button from "./Button";
+import Input from "../../../components/Input";
+import Button from "../../../components/Button";
+import { AxiosError } from "axios";
+import validateRegister from "../validator/validate-register.js";
+import userApi from "../../../api/authUser";
+import { toast } from 'react-toastify'
+// import useAdmin from "../../../hooks/useAdmin";
 
 const initialInput = {
     email: '',
@@ -16,28 +21,51 @@ const initialInputError = {
     confirmPassword: ''
 }
 
-export default function UserRegister() {
+export default function UserRegister({ onCloseModal }) {
 
     const [ input, setInput ] = useState( initialInput )
     const [ inputError, setInputError ] = useState( initialInputError )
 
-    console.log(input)
-
     const handleChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value})
+        setInputError((prev) => ({ ...prev, [e.target.name]: ''}))
     }
 
-    const handleSubmitFrom = async (e) => {
-        try {
-            e.preventDefault()
+   const handleSubmitForm = async (e) => {
+    try {
+        e.preventDefault()
+        const error = validateRegister(input)
 
-        } catch (err) {
-            console.log(err)
+        if( error ) {
+            setInputError(error)
+            
+            if (input.confirmPassword === '') {
+                return setInputError((prev)=>({...prev, confirmPassword: "confirm password is required"}))
+            }
         }
+
+
+        setInputError({...initialInputError})
+
+        await userApi.register(input)
+
+        toast.success("register successfully. please login to continue.")
+        onCloseModal()
+        
+    } catch (err) {
+        console.log(err)
+        if (err instanceof AxiosError) {
+            if (err.response.data.message === 'email already in use')
+              setInputError(prev => ({
+                ...prev,
+                email: 'email already in use.'
+              }));
+          }
     }
+   }
 
   return (
-    <form onSubmit={handleSubmitFrom}>
+    <form onSubmit={handleSubmitForm}>
         <div className="flex mx-10 flex-col gap-3 mb-7 mt-1">
             <div>
                 <label>Email</label>
@@ -46,7 +74,7 @@ export default function UserRegister() {
                     value={input.email}
                     name={'email'}
                     onChange={handleChange}
-                    error={'password มากกว่า 6 ตัวอักษรขึ้นไป'}
+                    error={inputError.email}
                 />
             </div>
 
@@ -57,7 +85,7 @@ export default function UserRegister() {
                     value={input.phone}
                     name={'phone'}
                     onChange={handleChange}
-                    error={''}
+                    error={inputError.phone}
                 />
             </div>
 
@@ -68,8 +96,8 @@ export default function UserRegister() {
                     value={input.password}
                     name={'password'}
                     onChange={handleChange}
-                    error={''}
-                    type="password"
+                    error={inputError.password}
+                    typeInput="password"
                 />
             </div>
 
@@ -80,8 +108,8 @@ export default function UserRegister() {
                     value={input.confirmPassword}
                     name={'confirmPassword'}
                     onChange={handleChange}
-                    error={''}
-                    type="password"
+                    error={inputError.confirmPassword}
+                    typeInput="password"
                 />
             </div>
 

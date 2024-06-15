@@ -1,11 +1,13 @@
 const bgMap = {
     green: 'bg-[#2BB673]',
-    gray: 'bg-gray-200'
+    gray: 'bg-gray-200',
+    greenDrop: 'bg-[#caf3df]'
 }
 
 const colorMap = {
     white: 'text-white',
-    black: 'text-[#3A3A3A]'
+    black: 'text-[#3A3A3A]',
+    green: 'text-[#2BB673]'
 }
 
 const borderMap = {
@@ -22,10 +24,11 @@ const widthMap = {
 export default function Button({
     children, bg='none',
     color='white', border='none',
-    width="w-full", onClick }) {
+    width="w-full", onClick , type="submit"}) {
+
     return (
         <button
             onClick={onClick}
-            className={`px-4 py-1.5 font-light rounded-full ${bgMap[bg]} ${colorMap[color]} ${widthMap[width]} ${borderMap[border]} hover:underline`} type="submit">{children}</button>
+            className={`px-4 py-1.5 font-light rounded-full ${bgMap[bg]} ${colorMap[color]} ${widthMap[width]} ${borderMap[border]} hover:underline`} type={type}>{children}</button>
       )
 }

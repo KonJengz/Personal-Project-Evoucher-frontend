@@ -1,10 +1,11 @@
 import mobile from '../assets/voucher.png'
 import ContentAdd from '../components/ContentAdd'
+import ContentLine from '../components/ContentLine'
 
 export default function HomePage() {
   return (
     <div>
-        <main className='flex items-center justify-center'>
+        <main className='flex items-center justify-center mt-5'>
             <div className='w-[30rem]'>
                 <img src={mobile} alt="voucher" />
             </div>
@@ -14,6 +15,7 @@ export default function HomePage() {
             </div>
         </main>
         <ContentAdd />
+        <ContentLine />
     </div>
   )
 }

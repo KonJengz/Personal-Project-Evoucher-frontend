@@ -30,7 +30,7 @@ export default function ContentAdd() {
   return (
     <div className="flex items-center flex-col my-5">
         <h1 className="text-2xl font-semibold">ตัวช่วยการขายบน LINE SHOPPING ที่ทุกร้านค้าออนไลน์ต้องมี</h1>
-        <div className="flex w-[50rem] gap-10 justify-center m-8">
+        <div className="flex w-[60rem] gap-10 justify-center m-8">
             { content.map((item) => (
                 <CardContent key={item.id} head={item.hend} text={item.text} url={item.url} />
             )) }

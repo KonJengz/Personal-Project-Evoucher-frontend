@@ -2,7 +2,7 @@
 export default function CardContent(props) {
     const { head, text, url } = props
   return (
-    <div>
+    <div className="flex flex-col items-center">
         <div className="w-72 rounded-2xl overflow-hidden mb-4">
             <img src={url} alt="content" />
         </div>
