@@ -67,6 +67,7 @@ export default function EditVoucher({ selectVoucher, handleClickCloseModal, getS
     },[])
 
     console.log('selectVoucher', selectVoucher)
+    console.log('startDate', input.startDate)
   return (
     <div className="flex gap-6 justify-center mt-3 mb-5">
         <div role="button" className={`rounded-2xl w-1/3`}>
@@ -120,7 +121,7 @@ export default function EditVoucher({ selectVoucher, handleClickCloseModal, getS
             <div>
                 <label className="text-slate-400">วันที่สิ้นสุด</label>
                 { isEdit
-                    ? <p>{input?.endDate}</p>
+                    ? <p>{new Date(input?.endDate).toLocaleDateString("en-GB")}</p>
                     : <Input
                     value={input?.endDate}
                     name={'endDate'}

@@ -1,12 +1,8 @@
 import { useState } from "react";
-import Button from "../../../components/Button";
-import Input from "../../../components/Input";
 import { AxiosError } from "axios";
-import imgSelect from '../../../assets/plus.svg'
 import validateAddstore from "../validate/validate-store";
 import storeApi from "../../../api/store";
 import { toast } from "react-toastify";
-import { useRef } from "react";
 import useStore from "../../../hooks/useStore";
 import FormStore from "./FormStore";
 
@@ -34,8 +30,6 @@ export default function FormAddStore({ closeFormAddStore }) {
   const [ inputError, setInputError ] = useState( initialInputError )
   const [ file, setFile ] = useState(null)
 
-  const fileEl = useRef()
-
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value})
     setInputError((prev) => ({ ...prev, [e.target.name]: ''}))
@@ -62,8 +56,6 @@ const handleSubmitFrom = async (e) => {
         formData.append('lineShoppingUrl' , input.lineShoppingUrl)
         formData.append('emailStore' , input.emailStore)
         formData.append('phoneStore' , input.phoneStore)
-        
-        console.log('aaaaaaaa')
 
       await storeApi.addStore(formData)
 

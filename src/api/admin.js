@@ -8,5 +8,7 @@ adminApi.getAuthAdmin = () => axios.get('/admin/me')
 
 adminApi.getAllUser = () => axios.get('/admin/getusers')
 adminApi.updateStatusUser = (status) => axios.patch('/admin/updateStatus', status)
+adminApi.getAllStore = () => axios.get('/admin/getuAllstore')
+adminApi.countOrderByUserId = () => axios.get('/admin/countOrderByUserId')
 
 export default adminApi

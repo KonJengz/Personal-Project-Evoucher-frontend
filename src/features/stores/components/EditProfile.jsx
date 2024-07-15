@@ -5,7 +5,6 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import validateAddstore from "../validate/validate-store";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 
   const initialInputError = {
     nameStore: '',

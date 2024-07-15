@@ -10,6 +10,7 @@ import voucherApi from "../api/voucher";
 import lineApi from "../api/lineShopping";
 import storeApi from "../api/store";
 import CloseVoucher from "../features/voucher/components/CloseVoucher";
+import { setAccessVoucherId } from "../utils/local-storage";
 
 export default function VoucherPage() {
 
@@ -36,8 +37,12 @@ export default function VoucherPage() {
 
   const getVoucherApiLine = async () => {
     try {
-      const voucherApiLine = await lineApi.getVoucherLine(params.id)
-      setGetAllVoucherApiLine(voucherApiLine.data)
+
+      if(getStoreById?.ApiKey) {
+        const voucherApiLine = await lineApi.getVoucherLine(params.id)
+        setGetAllVoucherApiLine(voucherApiLine.data)
+      }
+      
     } catch (error) {
       console.log('error', error.message)
     }
@@ -45,7 +50,6 @@ export default function VoucherPage() {
 
   const handClickConfirm = (data) => {
     setSelectVoucher(data)
-    // console.log('first', data)
   }
 
   const handClickCancel = () => {
@@ -65,10 +69,8 @@ export default function VoucherPage() {
     
     await voucherApi.createVoucher(dataCreate)
     getSelectVoucher()
+    setAccessVoucherId(dataCreate.numberVoucher)
   }
-
-  console.log('selectVoucher', selectVoucher)
-  console.log('getStoreById', getStoreById)
 
   const [ findSelectVoucher, setFindSelectVoucher ] = useState(null)
 
@@ -76,13 +78,11 @@ export default function VoucherPage() {
     try {
       const voucherUse = await voucherApi.getVoucher(params.id)
       const data = voucherUse.data
-      console.log('dataaaaaaaaa', data)
       const voucherStatusTrue = []
       const voucherStatusFalse = []
       
-      for (let i of data) {
+      for (let i of data) { // แยก voucher ที่ปิดการใช้งาน check จาก statusVoucher
         if (i.statusVoucher === true) {
-          console.log('iiiiiiiiiiiii', i)
           voucherStatusTrue.push(i)
           
         } else {
@@ -90,7 +90,7 @@ export default function VoucherPage() {
         }
       }
 
-      setFindSelectVoucher(voucherStatusTrue)
+      setFindSelectVoucher(voucherStatusTrue) //ใส่ค่าเข้าไปใน stage
       setCloseVoucher(voucherStatusFalse)
       
     } catch (error) {
@@ -134,7 +134,7 @@ export default function VoucherPage() {
       <Modal width={60} title="เลือก voucher ที่ต้องการใช้" open={openModal} onClose={() => setOpenModal(false)}>
           <div className="grid grid-cols-4 gap-3 mt-3 mb-2 px-14" onClick={handClickCancel}>
 
-            { getAllVoucherApiLine?.map((item) => (
+            { getAllVoucherApiLine?.map((item) => ( //เลือก voucher ที่มาจากไลน์
               <VoucherItem key={item.id} data={item} selectVoucher={selectVoucher} handClickCancel={handClickCancel} onClick={handClickConfirm} />
             ))}
           
@@ -144,7 +144,7 @@ export default function VoucherPage() {
           </div>
       </Modal>
 
-      { isVoucherCloseStatus
+      { isVoucherCloseStatus // voucher ที่ปิดการใช้งาน
         ? <div className="my-4">
           <CloseVoucher getSelectVoucher={getSelectVoucher} closeVoucher={closeVoucher} />
         </div>

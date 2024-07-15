@@ -11,6 +11,7 @@ import AdminContainer from '../layouts/AdminContainer'
 import AdminManage from '../features/admin/components/AdminManage'
 import ProtectedRouteAdmin from '../features/authentication/components/ProtectedRouteAdmin'
 import RedeemVoucher from '../features/voucher/components/RedeemVoucher'
+import { Navigate } from 'react-router-dom'
 
 const StoreContainer = lazy(() => import('../layouts/StoreContainer'))
 const VoucherPage = lazy(() => import('../pages/VoucherPage'))
@@ -57,7 +58,8 @@ const router = createBrowserRouter([
                 <RedeemVoucher />
             </ProtectedRoute>
         )
-    }
+    },
+    { path: '*', element: <Navigate to='/' />}
 ])
 
 export default function Router() {

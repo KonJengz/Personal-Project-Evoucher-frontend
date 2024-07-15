@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { createContext } from "react"
-import { getAccessToken, removeAccessToken, setAccessToken } from "../utils/local-storage";
+import { getAccessToken } from "../utils/local-storage";
 import orderApi from "../api/order";
 
 export const OrderContext = createContext() 
@@ -14,7 +14,7 @@ export default function OrderContextProvider({ children }) {
     try {
       if (getAccessToken()) {
         const res = await orderApi.getVoucherByStoreId(storeId)
-        console.log('res.data fetchOrder', res.data)
+        // console.log('res.data fetchOrder', res.data)
         setGetAllVoucher(res.data)
       }
     } catch (error) {

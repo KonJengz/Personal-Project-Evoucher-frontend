@@ -10,6 +10,7 @@ export default function AdminContextProvider({ children }) {
     const [ authAdmin, setAuthAdmin ] = useState(null)
     const [ isAuthAdminLoading, setIsAuthAdminLoding ] = useState(true)
     const [ getAllUser, setGetAllUser ] = useState(null)
+    const [ getAllStore, setAllStore ] = useState(null)
 
     useEffect(() => {
         const fetchAdmin = async () => {
@@ -18,6 +19,9 @@ export default function AdminContextProvider({ children }) {
                     const res = await adminApi.getAuthAdmin()
                     // console.log('res.data',res.data)
                     setAuthAdmin(res.data.admin)
+
+                    const resGetAllStore = await adminApi.getAllStore()
+                    setAllStore(resGetAllStore.data)
 
                 }
             } catch (err) {
@@ -41,7 +45,6 @@ export default function AdminContextProvider({ children }) {
         } finally {
             setIsAuthAdminLoding(false)
         }
-        console.log('ddddddddddddgggggggg')
   }
 
     useEffect(() => {
@@ -56,6 +59,8 @@ export default function AdminContextProvider({ children }) {
     
         const resGetAuthUser = await adminApi.getAuthAdmin()
         setAuthAdmin(resGetAuthUser.data.admin)
+
+
       }
 
     const logout = () => {
@@ -64,7 +69,7 @@ export default function AdminContextProvider({ children }) {
     }
 
   return (
-    <AdminContext.Provider value={{ login, logout, authAdmin, isAuthAdminLoading, getAllUser }}>
+    <AdminContext.Provider value={{ login, logout, authAdmin, isAuthAdminLoading, getAllUser, getAllStore }}>
         { children }
     </AdminContext.Provider>
   )
